@@ -1,26 +1,76 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-display: "DM Serif Display", "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+  --font-body: "Manrope", "Avenir Next", "Segoe UI", "Noto Sans", sans-serif;
+  --font-script: "Allura", "Snell Roundhand", "Brush Script MT", cursive;
+
+  --bg-1: #fff8f3;
+  --bg-2: #fceeef;
+  --text-primary: #2f2430;
+  --accent-rose: #c9788d;
+  --accent-gold: #d8a46b;
+  --accent-sage: #8dafa3;
+  --surface: rgba(255, 255, 255, 0.56);
+  --surface-border: rgba(47, 36, 48, 0.12);
+
+  --container-max: 1200px;
+  --container-pad-x: clamp(16px, 4vw, 56px);
+  --space-1: clamp(4px, 0.4vw, 6px);
+  --space-2: clamp(8px, 0.7vw, 10px);
+  --space-3: clamp(12px, 1vw, 14px);
+  --space-4: clamp(16px, 1.2vw, 18px);
+  --space-5: clamp(20px, 1.5vw, 24px);
+  --space-6: clamp(24px, 1.8vw, 30px);
+  --space-7: clamp(32px, 2.2vw, 40px);
+  --space-8: clamp(40px, 3vw, 52px);
+  --space-9: clamp(56px, 4vw, 72px);
+  --space-10: clamp(72px, 6vw, 96px);
+  --space-11: clamp(88px, 8vw, 120px);
+  --space-12: clamp(104px, 10vw, 140px);
+  --radius-card: 20px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  margin: 0;
+}
+
+html,
+body {
+  min-height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(217, 164, 107, 0.2), transparent 35%),
+    radial-gradient(circle at 85% 25%, rgba(201, 120, 141, 0.24), transparent 38%),
+    linear-gradient(170deg, var(--bg-1), var(--bg-2));
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }

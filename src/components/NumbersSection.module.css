@@ -1,0 +1,102 @@
+.section {
+  padding-block: var(--space-12);
+  background: linear-gradient(160deg, #2a1520, #1a0f14, #2a1520);
+  position: relative;
+  overflow: clip;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 50%, rgba(201, 120, 141, 0.14), transparent 40%),
+    radial-gradient(circle at 85% 50%, rgba(216, 164, 107, 0.12), transparent 40%);
+  pointer-events: none;
+}
+
+.container {
+  width: min(100% - 2 * var(--container-pad-x), var(--container-max));
+  margin-inline: auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-10);
+}
+
+.eyebrow {
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(216, 164, 107, 0.8);
+  font-weight: 700;
+}
+
+.title {
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  margin-top: var(--space-4);
+  color: rgba(255, 248, 243, 0.95);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(201, 120, 141, 0.2);
+  border-radius: 20px;
+  padding: var(--space-7) var(--space-5);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: background 380ms ease, border-color 380ms ease, transform 380ms ease;
+}
+
+.card:hover {
+  background: rgba(201, 120, 141, 0.1);
+  border-color: rgba(201, 120, 141, 0.4);
+  transform: translateY(-6px);
+}
+
+.statValue {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  background: linear-gradient(130deg, var(--accent-rose), var(--accent-gold));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  line-height: 1.1;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(255, 248, 243, 0.88);
+  line-height: 1.4;
+}
+
+.note {
+  font-size: 0.78rem;
+  color: rgba(255, 248, 243, 0.48);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+}

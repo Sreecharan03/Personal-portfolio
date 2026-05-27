@@ -1,0 +1,291 @@
+.section {
+  padding-block: var(--space-12);
+  background: linear-gradient(170deg, #fff8f3, #fceeef, #fff8f3);
+  position: relative;
+  overflow: clip;
+}
+
+.container {
+  width: min(100% - 2 * var(--container-pad-x), 1000px);
+  margin-inline: auto;
+}
+
+/* ── Header ─────────────────────────────── */
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-11);
+}
+
+.eyebrow {
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--text-primary) 60%, white 40%);
+  font-weight: 700;
+}
+
+.title {
+  font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+  margin-block: var(--space-4) var(--space-4);
+  color: var(--text-primary);
+}
+
+.subtitle {
+  max-width: 52ch;
+  margin-inline: auto;
+  line-height: 1.8;
+  color: color-mix(in srgb, var(--text-primary) 68%, white 32%);
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+}
+
+/* ── Track (the vertical timeline container) ─── */
+
+.track {
+  position: relative;
+  padding-block: var(--space-6) var(--space-8);
+}
+
+/* Static guide line (always visible, faint) */
+.lineGuide {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: rgba(47, 36, 48, 0.09);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+/* Colored animated line (grows with scroll) */
+.lineWrap {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  overflow: hidden;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.line {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--accent-rose) 0%,
+    var(--accent-gold) 50%,
+    var(--accent-sage) 100%
+  );
+  transform-origin: top center;
+  border-radius: 999px;
+}
+
+/* ── Each Milestone ──────────────────────── */
+
+.milestone {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 56px 1fr;
+  grid-template-rows: auto auto;
+  column-gap: var(--space-6);
+  padding-bottom: var(--space-10);
+  align-items: start;
+}
+
+/* The dot — always sits in the center column, row 1 */
+.dot {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  align-self: center;
+  margin-top: var(--space-8);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--dot-color, var(--accent-rose));
+  box-shadow:
+    0 0 0 5px white,
+    0 0 0 8px color-mix(in srgb, var(--dot-color, var(--accent-rose)) 25%, transparent 75%);
+  z-index: 4;
+  position: relative;
+}
+
+.dot::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--dot-color, var(--accent-rose)) 20%, transparent 80%),
+    transparent 70%
+  );
+  animation: dotPulse 2.6s ease-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Date label — center column, row 2 */
+.dateLabel {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: center;
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--text-primary) 48%, white 52%);
+  white-space: nowrap;
+  margin-top: var(--space-2);
+}
+
+/* Card — left or right column, spanning both rows */
+.card {
+  grid-row: 1 / 3;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(47, 36, 48, 0.1);
+  border-radius: 22px;
+  overflow: clip;
+  box-shadow: 0 10px 36px rgba(47, 36, 48, 0.1);
+  transition: box-shadow 360ms ease;
+}
+
+.card:hover {
+  box-shadow: 0 20px 56px rgba(47, 36, 48, 0.15);
+}
+
+.milestone[data-align="left"] .card {
+  grid-column: 1;
+}
+
+.milestone[data-align="right"] .card {
+  grid-column: 3;
+}
+
+/* ── Card internals ────────────────────── */
+
+.photo {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: clip;
+  background: rgba(47, 36, 48, 0.06);
+}
+
+.photoSheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cardBody {
+  padding: var(--space-6) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cardEyebrow {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.cardText {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--text-primary) 72%, white 28%);
+  margin-top: var(--space-1);
+}
+
+/* ── India Map card ─────────────────────── */
+
+.mapWrap {
+  background: linear-gradient(135deg, #1e1418, #2a1e24);
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.mapSvg {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  overflow: visible;
+}
+
+.mapCaption {
+  font-size: 0.84rem;
+  font-style: italic;
+  color: rgba(255, 248, 243, 0.5);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ── Mobile ──────────────────────────────── */
+
+@media (max-width: 768px) {
+  .lineGuide,
+  .lineWrap {
+    left: 18px;
+    transform: none;
+  }
+
+  .milestone {
+    display: block;
+    padding-left: 52px;
+    padding-bottom: var(--space-8);
+    position: relative;
+  }
+
+  .dot {
+    position: absolute;
+    left: 8px;
+    top: var(--space-7);
+    margin-top: 0;
+    grid-column: unset;
+    grid-row: unset;
+    width: 14px;
+    height: 14px;
+  }
+
+  .dateLabel {
+    position: absolute;
+    left: 52px;
+    top: calc(var(--space-7) + 18px);
+    grid-column: unset;
+    grid-row: unset;
+    text-align: left;
+    margin-top: 0;
+  }
+
+  .card {
+    grid-column: unset;
+    grid-row: unset;
+    width: 100%;
+    margin-top: calc(var(--space-7) + 36px);
+  }
+
+  .milestone[data-align="left"] .card,
+  .milestone[data-align="right"] .card {
+    grid-column: unset;
+  }
+}

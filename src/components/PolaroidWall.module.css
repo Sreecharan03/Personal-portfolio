@@ -1,0 +1,117 @@
+.section {
+  padding-block: var(--space-12);
+  background: linear-gradient(160deg, #2a1f1a, #1e1410);
+  position: relative;
+  overflow: clip;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+.container {
+  width: min(100% - 2 * var(--container-pad-x), var(--container-max));
+  margin-inline: auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.eyebrow {
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(216, 164, 107, 0.75);
+  font-weight: 700;
+}
+
+.title {
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  margin-block: var(--space-4) var(--space-3);
+  color: rgba(255, 248, 243, 0.95);
+}
+
+.subtitle {
+  color: rgba(255, 248, 243, 0.45);
+  line-height: 1.7;
+}
+
+.board {
+  position: relative;
+  width: 100%;
+  height: 680px;
+  touch-action: none;
+}
+
+.polaroid {
+  position: absolute;
+  width: 180px;
+  background: white;
+  padding: 10px 10px 36px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: grab;
+  user-select: none;
+  border-radius: 3px;
+}
+
+.polaroid:nth-child(1) { top: 5%; left: 3%; }
+.polaroid:nth-child(2) { top: 8%; left: 24%; }
+.polaroid:nth-child(3) { top: 4%; left: 47%; }
+.polaroid:nth-child(4) { top: 6%; left: 70%; }
+.polaroid:nth-child(5) { top: 52%; left: 5%; }
+.polaroid:nth-child(6) { top: 50%; left: 26%; }
+.polaroid:nth-child(7) { top: 55%; left: 49%; }
+.polaroid:nth-child(8) { top: 50%; left: 71%; }
+
+.polaroid:active {
+  cursor: grabbing;
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: clip;
+  background: #f0e8e0;
+}
+
+.caption {
+  font-family: var(--font-script);
+  font-size: 0.82rem;
+  color: #4a3a3a;
+  text-align: center;
+  padding-top: 8px;
+  line-height: 1.3;
+}
+
+@media (max-width: 960px) {
+  .board {
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    touch-action: auto;
+  }
+
+  .polaroid {
+    position: static;
+    width: 100%;
+    cursor: default;
+  }
+
+  .polaroid:nth-child(odd) { rotate: -2deg; }
+  .polaroid:nth-child(even) { rotate: 2deg; }
+}
+
+@media (max-width: 640px) {
+  .board {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

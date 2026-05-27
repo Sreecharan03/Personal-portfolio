@@ -1,0 +1,131 @@
+.section {
+  padding-block: var(--space-12);
+  background: linear-gradient(160deg, #1a0f14, #2a1520, #1a0f14);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  position: relative;
+  overflow: clip;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(201, 120, 141, 0.12), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(216, 164, 107, 0.1), transparent 40%);
+  pointer-events: none;
+}
+
+.envelope {
+  width: min(480px, 90vw);
+  position: relative;
+}
+
+.envelopeBody {
+  background: linear-gradient(135deg, #c9788d, #d8a46b);
+  border-radius: 16px 16px 8px 8px;
+  padding: var(--space-5) var(--space-7);
+  text-align: center;
+}
+
+.envelopeFlap {
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(135deg, #b56878, #c49060);
+  border-radius: 8px 8px 0 0;
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  transform-origin: top center;
+  backface-visibility: hidden;
+}
+
+.eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 248, 243, 0.9);
+  font-weight: 700;
+}
+
+.paper {
+  width: min(680px, 90vw);
+  background: rgba(255, 252, 248, 0.97);
+  border-radius: 20px;
+  padding: var(--space-10) var(--space-10);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.07),
+    0 20px 60px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+}
+
+.paper::before {
+  content: "";
+  position: absolute;
+  left: 72px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(201, 120, 141, 0.2);
+  border-radius: 999px;
+}
+
+.letterLines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 2;
+  color: var(--text-primary);
+  padding-left: var(--space-6);
+}
+
+.line {
+  display: block;
+  min-height: 1.6em;
+}
+
+.line:first-child {
+  font-family: var(--font-script);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--accent-rose);
+  margin-bottom: var(--space-3);
+}
+
+.line:last-child,
+.line:nth-last-child(2) {
+  font-family: var(--font-script);
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  color: var(--accent-rose);
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  color: var(--accent-rose);
+  animation: blink 0.7s step-end infinite;
+  margin-left: 1px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@media (max-width: 640px) {
+  .paper {
+    padding: var(--space-8) var(--space-6);
+  }
+
+  .paper::before {
+    display: none;
+  }
+
+  .letterLines {
+    padding-left: 0;
+    font-size: 0.95rem;
+  }
+}
