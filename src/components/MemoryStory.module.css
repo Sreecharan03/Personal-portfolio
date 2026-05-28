@@ -199,7 +199,9 @@
   min-height: 100vh;
   display: grid;
   align-items: center;
-  overflow: clip;
+  overflow-x: clip;
+  overflow-y: visible;
+  padding-block: var(--space-8);
 }
 
 .chapterText {
@@ -265,9 +267,12 @@
 }
 
 .mediaCard p {
-  padding: var(--space-5);
+  padding: var(--space-4) var(--space-5) var(--space-5);
   line-height: 1.7;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  color: color-mix(in srgb, var(--text-primary) 78%, white 22%);
+  position: relative;
+  z-index: 1;
 }
 
 .finale {
@@ -437,6 +442,24 @@
 
   .chapter {
     min-height: 220vh;
+  }
+
+  .sticky {
+    align-items: start;
+    padding-block: var(--space-10) var(--space-6);
+  }
+
+  .chapterText {
+    margin-bottom: var(--space-5);
+  }
+
+  .chapterText h2 {
+    font-size: clamp(1.7rem, 4vw, 2.8rem);
+    margin-block: var(--space-3) var(--space-3);
+  }
+
+  .mediaImage {
+    aspect-ratio: 3 / 4;
   }
 }
 
