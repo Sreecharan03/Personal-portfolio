@@ -123,15 +123,146 @@
   margin-block: var(--space-5);
 }
 
+.lockIcon {
+  font-size: 2.8rem;
+  margin-bottom: var(--space-3);
+  display: block;
+}
+
+.gateSubtitle {
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--text-primary) 60%, white 40%);
+  margin-block: 0 var(--space-6);
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  text-align: left;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.fieldLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--text-primary) 56%, white 44%);
+}
+
+.input {
+  width: 100%;
+  padding: var(--space-3) var(--space-5);
+  border-radius: 12px;
+  border: 1.5px solid rgba(201, 120, 141, 0.25);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 240ms ease, box-shadow 240ms ease;
+  font-family: var(--font-body);
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: rgba(201, 120, 141, 0.6);
+  box-shadow: 0 0 0 3px rgba(201, 120, 141, 0.12);
+}
+
+.input::placeholder {
+  color: color-mix(in srgb, var(--text-primary) 35%, white 65%);
+}
+
+.pwWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pwWrap .input {
+  padding-right: 3rem;
+}
+
+.eyeBtn {
+  position: absolute;
+  right: var(--space-3);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 2px;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 200ms ease;
+}
+
+.eyeBtn:hover {
+  opacity: 1;
+}
+
+.errorMsg {
+  font-size: 0.88rem;
+  color: var(--accent-rose);
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+}
+
 .cta {
-  margin-top: var(--space-7);
+  margin-top: var(--space-3);
   border: none;
   border-radius: 999px;
   padding: var(--space-4) var(--space-8);
   font-weight: 700;
+  font-size: 1rem;
   color: white;
   background: linear-gradient(130deg, var(--accent-rose), var(--accent-gold));
   cursor: pointer;
+  width: 100%;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.cta:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.cta:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.hintBtn {
+  margin-top: var(--space-5);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: color-mix(in srgb, var(--text-primary) 55%, white 45%);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 200ms ease;
+}
+
+.hintBtn:hover {
+  color: var(--accent-rose);
+}
+
+.hintText {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--text-primary) 65%, white 35%);
+  font-style: italic;
+  margin-top: var(--space-2);
+  overflow: hidden;
+  text-align: center;
 }
 
 .hero {

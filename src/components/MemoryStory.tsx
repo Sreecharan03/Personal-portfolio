@@ -3,7 +3,7 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, MotionValue, useScroll, useSpring, useTransform } from "framer-motion";
+import { AnimatePresence, motion, MotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import { CursorTrail } from "./CursorTrail";
@@ -228,6 +228,129 @@ function CountdownFinale({ seconds }: { seconds: MotionValue<number> }) {
 }
 
 
+function GateLogin({ onUnlock }: { onUnlock: () => void }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPw, setShowPw] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+  const [error, setError] = useState("");
+  const [shaking, setShaking] = useState(false);
+  const [unlocking, setUnlocking] = useState(false);
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (username.trim().toLowerCase() === "meghana" && password === "7416372728") {
+      setUnlocking(true);
+      setTimeout(onUnlock, 900);
+    } else {
+      setError(username.trim().toLowerCase() !== "meghana" ? "Wrong name, Bubu 😏" : "Wrong password. Need a hint?");
+      setShaking(true);
+      setTimeout(() => setShaking(false), 600);
+    }
+  }
+
+  return (
+    <motion.div
+      className={styles.gate}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: unlocking ? 0 : 1 }}
+      transition={{ duration: 0.7 }}
+    >
+      <motion.div
+        className={styles.gateCard}
+        animate={shaking ? { x: [-10, 10, -8, 8, -4, 4, 0] } : { x: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {/* Lock icon */}
+        <motion.div
+          className={styles.lockIcon}
+          animate={unlocking ? { scale: 1.3, rotate: -20, opacity: 0 } : { scale: 1, rotate: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {unlocking ? "🔓" : "🔒"}
+        </motion.div>
+
+        <p className={styles.eyebrow}>For Meghana&apos;s Eyes Only</p>
+        <h1>This Gift Is Locked</h1>
+        <p className={styles.gateSubtitle}>Only she knows how to open it.</p>
+
+        <form className={styles.loginForm} onSubmit={handleSubmit} autoComplete="off">
+          <div className={styles.field}>
+            <label className={styles.fieldLabel}>Your Name</label>
+            <input
+              className={styles.input}
+              type="text"
+              placeholder="Who are you?"
+              value={username}
+              onChange={(e) => { setUsername(e.target.value); setError(""); }}
+              autoComplete="off"
+              spellCheck={false}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.fieldLabel}>Secret Code</label>
+            <div className={styles.pwWrap}>
+              <input
+                className={styles.input}
+                type={showPw ? "text" : "password"}
+                placeholder="Enter the code…"
+                value={password}
+                onChange={(e) => { setPassword(e.target.value); setError(""); }}
+                autoComplete="new-password"
+              />
+              <button
+                type="button"
+                className={styles.eyeBtn}
+                onClick={() => setShowPw((v) => !v)}
+                aria-label={showPw ? "Hide password" : "Show password"}
+              >
+                {showPw ? "🙈" : "👁️"}
+              </button>
+            </div>
+          </div>
+
+          {error && (
+            <motion.p
+              className={styles.errorMsg}
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              {error}
+            </motion.p>
+          )}
+
+          <button type="submit" className={styles.cta} disabled={unlocking}>
+            {unlocking ? "Opening…" : "Unlock Your Gift 💝"}
+          </button>
+        </form>
+
+        <button
+          type="button"
+          className={styles.hintBtn}
+          onClick={() => setShowHint((v) => !v)}
+        >
+          {showHint ? "Hide hint" : "Need a hint? 💭"}
+        </button>
+
+        <AnimatePresence>
+          {showHint && (
+            <motion.p
+              className={styles.hintText}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              First 5 digits of his number + Last 5 digits of your number
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function MemoryStory() {
   const [opened, setOpened] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -262,18 +385,7 @@ export function MemoryStory() {
     <div className={styles.page}>
       <CursorTrail />
 
-      {!opened && (
-        <motion.div className={styles.gate} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <div className={styles.gateCard}>
-            <p className={styles.eyebrow}>For Bubu's Eyes Only</p>
-            <h1>A Story Built for Her 22nd</h1>
-            <p>Not just a website. A memory film, a love letter, a game, a bucket list, and everything in between. All for you.</p>
-            <button type="button" onClick={() => setOpened(true)} className={styles.cta}>
-              Open Your Gift
-            </button>
-          </div>
-        </motion.div>
-      )}
+      {!opened && <GateLogin onUnlock={() => setOpened(true)} />}
 
       <motion.div className={styles.progress} style={{ scaleX: progress }} />
       <div className={styles.grain} aria-hidden />
