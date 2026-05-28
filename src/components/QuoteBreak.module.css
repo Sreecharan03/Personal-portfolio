@@ -15,18 +15,36 @@
 
 .quote {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 4.5vw, 3.6rem);
-  line-height: 1.4;
-  color: var(--text-primary);
+  font-size: clamp(1.9rem, 4.8vw, 3.8rem);
+  line-height: 1.5;
   position: relative;
   z-index: 1;
+  background: linear-gradient(135deg, var(--accent-rose) 10%, var(--accent-gold) 55%, var(--accent-rose) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientFlow 6s ease-in-out infinite alternate;
+}
+
+.quoteDark {
+  background: linear-gradient(135deg, #f0b0c2 10%, #f5d4a0 55%, #a8c8c0 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.word {
+  display: inline-block;
+  white-space: pre;
 }
 
 .openQuote,
 .closeQuote {
   font-family: var(--font-display);
   font-size: clamp(5rem, 12vw, 10rem);
-  color: rgba(201, 120, 141, 0.15);
+  color: rgba(201, 120, 141, 0.12);
   position: absolute;
   line-height: 1;
   pointer-events: none;
@@ -35,12 +53,17 @@
 
 .openQuote {
   top: -2rem;
-  left: -2rem;
+  left: -2.5rem;
 }
 
 .closeQuote {
   bottom: -4rem;
-  right: -2rem;
+  right: -2.5rem;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% center; }
+  100% { background-position: 100% center; }
 }
 
 @media (max-width: 640px) {
