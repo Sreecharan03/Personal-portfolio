@@ -117,7 +117,8 @@
 
 @media (max-width: 640px) {
   .paper {
-    padding: var(--space-8) var(--space-6);
+    padding: var(--space-6) var(--space-5);
+    border-radius: 14px;
   }
 
   .paper::before {
@@ -126,6 +127,20 @@
 
   .letterLines {
     padding-left: 0;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    line-height: 1.85;
+  }
+
+  .line:first-child {
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+  }
+
+  .line:last-child,
+  .line:nth-last-child(2) {
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+  }
+
+  .envelopeBody {
+    padding: var(--space-4) var(--space-5);
   }
 }

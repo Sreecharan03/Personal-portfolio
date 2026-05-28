@@ -298,3 +298,46 @@
     grid-column: unset;
   }
 }
+
+@media (max-width: 480px) {
+  .section {
+    padding-block: var(--space-9);
+  }
+
+  .track {
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  .milestone {
+    padding-left: 44px;
+    padding-bottom: var(--space-7);
+  }
+
+  .dot {
+    left: 4px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .dateLabel {
+    left: 44px;
+    font-size: 0.6rem;
+  }
+
+  .card {
+    margin-top: calc(var(--space-6) + 32px);
+    border-radius: 16px;
+  }
+
+  .cardTitle {
+    font-size: clamp(1.1rem, 5vw, 1.5rem);
+  }
+
+  .cardBody {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .header {
+    margin-bottom: var(--space-8);
+  }
+}

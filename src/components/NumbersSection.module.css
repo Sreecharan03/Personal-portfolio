@@ -100,6 +100,25 @@
 
 @media (max-width: 480px) {
   .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  .card {
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .statValue {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+  }
+
+  .label {
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-4);
   }

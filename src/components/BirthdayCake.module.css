@@ -277,12 +277,33 @@
 }
 
 @media (max-width: 640px) {
-  .cakeTop { width: 200px; }
-  .cakeMiddle { width: 230px; }
-  .cakeBase { width: 260px; }
-  .plate { width: 290px; }
+  .cakeTop { width: min(200px, 54vw); }
+  .cakeMiddle { width: min(230px, 62vw); }
+  .cakeBase { width: min(260px, 70vw); }
+  .plate { width: min(290px, 78vw); }
+
+  .candles {
+    gap: 6px;
+    max-width: 100%;
+    padding-inline: var(--space-4);
+  }
+
+  .candleStick {
+    width: 10px;
+    height: 28px;
+  }
+
+  .flame {
+    width: 8px;
+    height: 13px;
+  }
 
   .wishCard {
     padding: var(--space-7) var(--space-5);
+  }
+
+  .blowBtn {
+    font-size: 1rem;
+    padding: var(--space-4) var(--space-7);
   }
 }

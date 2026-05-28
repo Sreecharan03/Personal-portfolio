@@ -113,5 +113,15 @@
 @media (max-width: 640px) {
   .board {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  .polaroid {
+    padding: 8px 8px 28px;
+  }
+
+  .caption {
+    font-size: 0.72rem;
+    padding-top: 5px;
   }
 }

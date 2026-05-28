@@ -477,7 +477,7 @@
 
   .sticky {
     align-items: start;
-    padding-block: var(--space-10) var(--space-6);
+    padding-block: var(--space-8) var(--space-6);
   }
 
   .chapterText {
@@ -494,25 +494,87 @@
   }
 }
 
-@media (max-width: 640px) {
-  .gateCard {
-    padding: var(--space-8) var(--space-6);
+@media (max-width: 768px) {
+  .heroScene {
+    display: none;
+  }
+
+  .hero {
+    background: linear-gradient(150deg, #fff8f3, #fceeef, #fff0f3);
   }
 
   .heroContent {
-    padding: var(--space-8);
+    padding: var(--space-7) var(--space-6);
+    border-radius: 20px;
+    backdrop-filter: none;
+  }
+
+  .heroContent h1 {
+    font-size: clamp(1.9rem, 6.5vw, 2.8rem);
+    margin-block: var(--space-3) var(--space-4);
+  }
+
+  .videoChapter {
+    min-height: 100vh;
+  }
+
+  .videoSticky {
+    position: relative;
+    min-height: unset;
+    padding-block: var(--space-10);
+  }
+}
+
+@media (max-width: 640px) {
+  .gateCard {
+    padding: var(--space-7) var(--space-5);
+    border-radius: 20px;
+  }
+
+  .gateCard h1 {
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+  }
+
+  .heroContent {
+    padding: var(--space-6) var(--space-5);
+    border-radius: 18px;
   }
 
   .countdown {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .countdown div {
+    padding: var(--space-4);
   }
 
   .mediaTrack {
-    grid-auto-columns: minmax(220px, 78vw);
+    grid-auto-columns: minmax(200px, 80vw);
   }
 
   .chapter {
     min-height: 200vh;
+  }
+
+  .sticky {
+    padding-block: var(--space-6) var(--space-5);
+  }
+
+  .chapterText {
+    margin-bottom: var(--space-4);
+  }
+
+  .chapterText h2 {
+    font-size: clamp(1.5rem, 5.5vw, 2rem);
+  }
+
+  .chapterText p {
+    font-size: 0.92rem;
+  }
+
+  .letter {
+    font-size: 0.92rem;
   }
 }
 
