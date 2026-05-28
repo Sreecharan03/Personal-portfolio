@@ -4,12 +4,11 @@ import { motion } from "framer-motion";
 import styles from "./QuoteBreak.module.css";
 
 const wordVariant = {
-  hidden: { opacity: 0, y: 22, filter: "blur(6px)" },
+  hidden: { opacity: 0, y: 18 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.55, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    transition: { duration: 0.5, delay: i * 0.065, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   }),
 };
 

@@ -34,7 +34,9 @@
     radial-gradient(circle at 78% 36%, rgba(216, 164, 107, 0.26), transparent 30%),
     radial-gradient(circle at 52% 82%, rgba(141, 175, 163, 0.22), transparent 26%),
     radial-gradient(circle at 30% 68%, rgba(201, 120, 141, 0.16), transparent 22%);
-  filter: blur(32px);
+  filter: blur(22px);
+  will-change: transform;
+  transform: translateZ(0);
   animation: auroraShift 12s ease-in-out infinite alternate;
 }
 
@@ -216,6 +218,7 @@
 
 .chapter {
   min-height: 270vh;
+  contain: layout paint;
 }
 
 .sticky {
@@ -254,6 +257,7 @@
   gap: var(--space-6);
   width: max-content;
   padding-right: 40vw;
+  will-change: transform;
 }
 
 .mediaCard {

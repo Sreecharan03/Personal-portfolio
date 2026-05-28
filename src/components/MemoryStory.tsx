@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, MotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
-import { HeroScene } from "./HeroScene";
 import { CursorTrail } from "./CursorTrail";
 import { LoveLetter } from "./LoveLetter";
 import { ReasonsSection } from "./ReasonsSection";
@@ -13,12 +13,14 @@ import { NumbersSection } from "./NumbersSection";
 import { SongsSection } from "./SongsSection";
 import { QuoteBreak } from "./QuoteBreak";
 import { QuizGame } from "./QuizGame";
-import { MemoryMatch } from "./MemoryMatch";
 import { BucketList } from "./BucketList";
-import { BirthdayCake } from "./BirthdayCake";
-import { PolaroidWall } from "./PolaroidWall";
 import { Timeline } from "./Timeline";
 import styles from "./MemoryStory.module.css";
+
+const HeroScene = dynamic(() => import("./HeroScene").then((m) => ({ default: m.HeroScene })), { ssr: false });
+const MemoryMatch = dynamic(() => import("./MemoryMatch").then((m) => ({ default: m.MemoryMatch })), { ssr: false });
+const BirthdayCake = dynamic(() => import("./BirthdayCake").then((m) => ({ default: m.BirthdayCake })), { ssr: false });
+const PolaroidWall = dynamic(() => import("./PolaroidWall").then((m) => ({ default: m.PolaroidWall })), { ssr: false });
 
 type Memory = {
   src: string;
@@ -232,14 +234,14 @@ export function MemoryStory() {
   const progress = useSpring(scrollYProgress, { stiffness: 110, damping: 26, mass: 0.25 });
   const secondsPulse = useTransform(scrollYProgress, [0, 1], [0, 1]);
   const chapterTrackY = useTransform(scrollYProgress, [0, 1], ["0%", "80%"]);
-  const confetti = useMemo(() => Array.from({ length: 26 }, (_, i) => i), []);
+  const confetti = useMemo(() => Array.from({ length: 14 }, (_, i) => i), []);
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.85,
       smoothWheel: true,
-      wheelMultiplier: 0.9,
-      touchMultiplier: 1.1,
+      wheelMultiplier: 1.1,
+      touchMultiplier: 1.6,
       easing: (t: number) => 1 - Math.pow(1 - t, 3),
     });
 
