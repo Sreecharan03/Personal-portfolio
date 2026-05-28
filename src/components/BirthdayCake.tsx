@@ -5,14 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import styles from "./BirthdayCake.module.css";
 
 const TOTAL_CANDLES = 22;
-
-type Firework = {
-  id: number;
-  x: number;
-  y: number;
-  color: string;
-};
-
 const COLORS = ["#c9788d", "#d8a46b", "#8dafa3", "#e8c4cc", "#f0d9b5"];
 
 function FireworksCanvas({ active }: { active: boolean }) {
@@ -46,13 +38,9 @@ function FireworksCanvas({ active }: { active: boolean }) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       launchTimer++;
       if (launchTimer % 30 === 0) launch();
-
       particles.current = particles.current.filter((p) => p.alpha > 0.05);
       for (const p of particles.current) {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.06;
-        p.alpha -= 0.015;
+        p.x += p.vx; p.y += p.vy; p.vy += 0.06; p.alpha -= 0.015;
         ctx.globalAlpha = p.alpha;
         ctx.fillStyle = p.color;
         ctx.beginPath();
@@ -67,31 +55,44 @@ function FireworksCanvas({ active }: { active: boolean }) {
   }, [active]);
 
   if (!active) return null;
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 100 }}
-    />
-  );
+  return <canvas ref={canvasRef} style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 100 }} />;
 }
 
 export function BirthdayCake() {
   const [blown, setBlown] = useState<Set<number>>(new Set());
   const [allBlown, setAllBlown] = useState(false);
+  const [blowing, setBlowing] = useState(false);
 
-  const blowCandle = useCallback((i: number) => {
-    if (allBlown) return;
+  const blowOne = useCallback((i: number) => {
+    if (allBlown || blowing) return;
     setBlown((prev) => {
       const next = new Set(prev);
       next.add(i);
-      if (next.size === TOTAL_CANDLES) {
-        setTimeout(() => setAllBlown(true), 400);
-      }
+      if (next.size === TOTAL_CANDLES) setTimeout(() => setAllBlown(true), 400);
       return next;
     });
-  }, [allBlown]);
+  }, [allBlown, blowing]);
 
-  const blownCount = blown.size;
+  const blowAll = useCallback(() => {
+    if (blowing || allBlown) return;
+    setBlowing(true);
+
+    const order = Array.from({ length: TOTAL_CANDLES }, (_, i) => i);
+    order.forEach((i) => {
+      setTimeout(() => {
+        setBlown((prev) => {
+          const next = new Set(prev);
+          next.add(i);
+          return next;
+        });
+        if (i === TOTAL_CANDLES - 1) {
+          setTimeout(() => setAllBlown(true), 500);
+        }
+      }, 400 + i * 70);
+    });
+  }, [blowing, allBlown]);
+
+  const remaining = TOTAL_CANDLES - blown.size;
 
   return (
     <section className={styles.section}>
@@ -108,7 +109,7 @@ export function BirthdayCake() {
           <p className={styles.eyebrow}>August 15, 2026 · Birthday</p>
           <h2 className={styles.title}>Make a Wish, Bubu</h2>
           <p className={styles.subtitle}>
-            22 candles. One for every year. Click each one to blow it out.
+            Take a deep breath. Close your eyes. Then blow.
           </p>
         </motion.div>
 
@@ -121,23 +122,36 @@ export function BirthdayCake() {
                   key={i}
                   className={styles.candle}
                   data-out={isOut}
-                  onClick={() => blowCandle(i)}
-                  whileHover={!isOut ? { scale: 1.1 } : {}}
-                  whileTap={!isOut ? { scale: 0.95 } : {}}
-                  initial={{ opacity: 0, y: 10 }}
+                  onClick={() => blowOne(i)}
+                  whileHover={!isOut && !blowing ? { scale: 1.12, y: -3 } : {}}
+                  whileTap={!isOut ? { scale: 0.92 } : {}}
+                  initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: i * 0.04 }}
+                  transition={{ duration: 0.3, delay: i * 0.035 }}
                   viewport={{ once: true }}
                   aria-label={`Candle ${i + 1}`}
                 >
                   <span className={styles.candleStick} />
+
                   <AnimatePresence>
                     {!isOut && (
                       <motion.span
                         className={styles.flame}
                         initial={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0, y: -10 }}
-                        transition={{ duration: 0.35 }}
+                        exit={{ opacity: 0, scale: 0, y: -14 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                      />
+                    )}
+                  </AnimatePresence>
+
+                  <AnimatePresence>
+                    {isOut && (
+                      <motion.span
+                        className={styles.smoke}
+                        initial={{ opacity: 0.7, y: 0, scaleX: 1 }}
+                        animate={{ opacity: 0, y: -22, scaleX: 1.8 }}
+                        exit={{}}
+                        transition={{ duration: 0.9, ease: "easeOut" }}
                       />
                     )}
                   </AnimatePresence>
@@ -155,25 +169,56 @@ export function BirthdayCake() {
             <div className={styles.plate} />
           </div>
 
-          {blownCount > 0 && !allBlown && (
-            <motion.p
-              className={styles.blownCount}
-              key={blownCount}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              {blownCount} of {TOTAL_CANDLES} blown out. Keep going.
-            </motion.p>
-          )}
+          <AnimatePresence mode="wait">
+            {!allBlown && (
+              <motion.div
+                key="blow-controls"
+                className={styles.blowControls}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.5 }}
+              >
+                {blowing && !allBlown ? (
+                  <div className={styles.blowingState}>
+                    <motion.div
+                      className={styles.progressRing}
+                      style={{
+                        background: `conic-gradient(#c9788d ${((TOTAL_CANDLES - remaining) / TOTAL_CANDLES) * 360}deg, rgba(255,255,255,0.08) 0deg)`,
+                      }}
+                    >
+                      <span className={styles.progressText}>{remaining}</span>
+                    </motion.div>
+                    <p className={styles.blowingLabel}>Blowing out the candles…</p>
+                  </div>
+                ) : (
+                  <motion.button
+                    className={styles.blowBtn}
+                    onClick={blowAll}
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <span className={styles.blowBtnWind}>🌬️</span>
+                    Take a Breath &amp; Blow
+                    <motion.span
+                      className={styles.blowBtnRing}
+                      animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0, 0.4] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                  </motion.button>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <AnimatePresence>
           {allBlown && (
             <motion.div
               className={styles.wishCard}
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ opacity: 0, scale: 0.9, y: 24 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
               <p className={styles.wishTitle}>Happy 22nd Birthday, Bubu.</p>
               <p className={styles.wishText}>

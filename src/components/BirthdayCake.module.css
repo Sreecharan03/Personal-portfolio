@@ -153,10 +153,94 @@
   margin-top: 4px;
 }
 
-.blownCount {
+.smoke {
+  display: block;
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 10px;
+  background: rgba(200, 200, 220, 0.55);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.blowControls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.blowBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-9);
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(130deg, var(--accent-rose), var(--accent-gold));
+  color: white;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 8px 32px rgba(201, 120, 141, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  overflow: visible;
+}
+
+.blowBtnWind {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.blowBtnRing {
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  border: 2px solid rgba(201, 120, 141, 0.5);
+  pointer-events: none;
+}
+
+.blowingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.progressRing {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background 200ms ease;
+}
+
+.progressText {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #1a0f14;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: rgba(255, 248, 243, 0.9);
+}
+
+.blowingLabel {
   font-size: 0.9rem;
-  color: rgba(255, 248, 243, 0.55);
+  color: rgba(255, 248, 243, 0.5);
   font-style: italic;
+  letter-spacing: 0.04em;
 }
 
 .wishCard {
